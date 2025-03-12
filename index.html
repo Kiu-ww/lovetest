@@ -103,7 +103,7 @@
     <!-- 开始页 -->
     <div id="start-page">
       <div class="start-image-container">
-        <img src="images/start-page.jpg" alt="开始页图片">
+        <img src="start-page.jpg" alt="开始页图片">
         <button id="start-button" class="overlay-button">开始测试</button>
       </div>
       <p>看看你的情感智商有多高！</p>
@@ -119,7 +119,7 @@
 <!-- 结果页 -->
 <div id="result-page" class="hidden">
   <h2>测试结果</h2>
-  <img id="result-img" src="images/result-page-1.jpg" alt="结果页图片" style="max-width:100%;height:auto;">
+  <img id="result-img" src="result-page-1.jpg" alt="结果页图片" style="max-width:100%;height:auto;">
   <div id="result-text"></div>
   <button id="restart-button">重新测试</button>
 </div>
@@ -260,13 +260,13 @@
 
   if (totalScore <= 10) {
     resultContent = "<h3>单纯天使型</h3><p>你在恋爱中很真诚，但可能有点“缺乏手段”。</p>";
-    resultImg.src = "images/result-page-1.jpg"; // 设置不同的结果页图片
+    resultImg.src = "result-page-1.jpg"; // 设置不同的结果页图片
   } else if (totalScore <= 25) {
     resultContent = "<h3>高情商玩家型</h3><p>你在恋爱中懂得察言观色，知道如何掌控节奏。</p>";
-    resultImg.src = "images/result-page-2.jpg";
+    resultImg.src = "result-page-2.jpg";
   } else {
     resultContent = "<h3>暗影猎人型</h3><p>你在感情中很有策略，懂得如何让对方更珍惜你。</p>";
-    resultImg.src = "images/result-page-3.jpg";
+    resultImg.src = "result-page-3.jpg";
   }
   
   resultText.innerHTML = resultContent;
