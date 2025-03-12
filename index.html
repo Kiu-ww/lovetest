@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>恋爱中的“心机值”测试</title>
+  <style>
+    /* 这里写入 CSS 样式 */
+    img {
+  width: 100%;  /* 让图片宽度自适应屏幕 */
+  height: auto; /* 保持原始宽高比 */
+  display: block;
+}
+    /* 设置开始页图片容器为相对定位 */
+.start-image-container {
+  position: relative;
+  width: 100%;
+}
+
+/* 图片自适应容器宽度 */
+.start-image-container img {
+  width: 100%;
+  display: block;
+}
+
+/* 按钮覆盖在图片上，通过绝对定位居中 */
+.overlay-button {
+  position: absolute;
+  bottom: 20px;          /* 按钮距离底部20px，根据需要调整 */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  background: #67c23a;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 按钮悬停效果 */
+.overlay-button:hover {
+  background: #85ce61;
+}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      background: #409eff;
+      color: #fff;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background: #66b1ff;
+    }
+    .hidden {
+      display: none;
+    }
+    #start-button, #restart-button {
+      width: 50%;
+      margin: 20px auto;
+      display: block;
+      padding: 10px;
+      font-size: 18px;
+      background: #67c23a;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+    }
+    #start-button:hover, #restart-button:hover {
+      background: #85ce61;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 开始页 -->
+    <div id="start-page">
+      <div class="start-image-container">
+        <img src="images/start-page.jpg" alt="开始页图片">
+        <button id="start-button" class="overlay-button">开始测试</button>
+      </div>
+      <p>看看你的情感智商有多高！</p>
+    </div>
+
+    <!-- 测试页 -->
+    <div id="quiz-page" class="hidden">
+      <div id="question-container">
+        <!-- 问题和选项将由 JavaScript 动态填充 -->
+      </div>
+    </div>
+
+<!-- 结果页 -->
+<div id="result-page" class="hidden">
+  <h2>测试结果</h2>
+  <img id="result-img" src="images/result-page-1.jpg" alt="结果页图片" style="max-width:100%;height:auto;">
+  <div id="result-text"></div>
+  <button id="restart-button">重新测试</button>
+</div>
+
+  <script>
+    // 定义所有题目和选项
+    var quizData = [
+      {
+        question: "你喜欢的人突然冷淡了，你会怎么做？",
+        options: [
+          { text: "直接问清楚，看看发生了什么。", score: 1 },
+          { text: "先冷静观察，减少主动联系。", score: 3 },
+          { text: "若无其事地提高自己的魅力，让TA主动靠近。", score: 5 }
+        ]
+      },
+      {
+        question: "TA在社交媒体上点赞了别人的暧昧内容，你会？",
+        options: [
+          { text: "立刻问TA是不是变心了。", score: 1 },
+          { text: "暂时不说，私下看看他们的互动再判断。", score: 3 },
+          { text: "也开始有意无意地互动其他异性内容，看看TA的反应。", score: 5 }
+        ]
+      },
+      {
+        question: "TA忘记了你们的纪念日，你会？",
+        options: [
+          { text: "直接生气，并让TA知道你很不开心。", score: 1 },
+          { text: "提醒TA，并看看TA怎么补救。", score: 3 },
+          { text: "假装不在意，但在合适的时机让TA‘心甘情愿’补偿你。", score: 5 }
+        ]
+      },
+      {
+        question: "TA突然和你提起一个异性朋友，你会怎么做？",
+        options: [
+          { text: "直接问清楚他们的关系。", score: 1 },
+          { text: "记住这个名字，但表面不表现出介意。", score: 3 },
+          { text: "让TA主动告诉你更多细节，同时无意间展示你的高价值。", score: 5 }
+        ]
+      },
+      {
+        question: "吵架后TA不主动哄你，你会？",
+        options: [
+          { text: "主动去找TA解决问题。", score: 1 },
+          { text: "先冷静，等TA来哄你。", score: 3 },
+          { text: "让TA感受到失去你的危机感，再让TA来找你。", score: 5 }
+        ]
+      },
+      {
+        question: "当TA开始对你态度敷衍时，你会？",
+        options: [
+          { text: "直接表达不满，让TA改正。", score: 1 },
+          { text: "有意减少联系，让TA意识到你的重要性。", score: 3 },
+          { text: "让自己更有吸引力，同时制造‘适当距离感’。", score: 5 }
+        ]
+      },
+      {
+        question: "TA对你提出了一个不合理的要求，你会？",
+        options: [
+          { text: "直接拒绝，告诉TA你的底线。", score: 1 },
+          { text: "表面不拒绝，但在行动上巧妙避开。", score: 3 },
+          { text: "让TA以为自己占了便宜，实际让TA更依赖你。", score: 5 }
+        ]
+      },
+      {
+        question: "TA说最近很忙，和你的互动减少了，你会？",
+        options: [
+          { text: "直接质问TA是不是不爱了。", score: 1 },
+          { text: "给TA空间，但偶尔制造一点‘让TA想起你’的小惊喜。", score: 3 },
+          { text: "让自己变得更忙更精彩，反过来让TA担心你是不是变了。", score: 5 }
+        ]
+      }
+    ];
+
+    var currentQuestion = 0;
+    var totalScore = 0;
+
+    // 显示当前题目
+    function showQuestion(index) {
+      var questionContainer = document.getElementById("question-container");
+      questionContainer.innerHTML = ""; // 清空上一题内容
+      var currentData = quizData[index];
+
+      // 如果需要在题目页中插入设计好的背景图或其他图片，可以在这里加入 <img> 标签
+      // 例如：
+      // var bgImg = document.createElement("img");
+      // bgImg.src = "images/quiz-bg.jpg";
+      // bgImg.style.maxWidth = "100%";
+      // questionContainer.appendChild(bgImg);
+
+      var questionTitle = document.createElement("h2");
+      questionTitle.innerText = "第 " + (index + 1) + " 题：" + currentData.question;
+      questionContainer.appendChild(questionTitle);
+
+      // 创建选项按钮
+      var optionsDiv = document.createElement("div");
+      optionsDiv.className = "options";
+      currentData.options.forEach(function(option) {
+        var btn = document.createElement("button");
+        btn.innerText = option.text;
+        btn.onclick = function() {
+          totalScore += option.score;
+          currentQuestion++;
+          if (currentQuestion < quizData.length) {
+            showQuestion(currentQuestion);
+          } else {
+            showResult();
+          }
+        };
+        optionsDiv.appendChild(btn);
+      });
+      questionContainer.appendChild(optionsDiv);
+    }
+
+    // 显示测试结果
+    function showResult() {
+      document.getElementById("quiz-page").classList.add("hidden");
+      document.getElementById("result-page").classList.remove("hidden");
+
+      var resultText = document.getElementById("result-text");
+      var resultContent = "";
+      if (totalScore <= 10) {
+        resultContent = "<h3>单纯天使型</h3><p>你在恋爱中很真诚，喜欢直接表达自己的想法，但可能有点“缺乏手段”。</p>";
+      } else if (totalScore <= 25) {
+        resultContent = "<h3>高情商玩家型</h3><p>你在恋爱中懂得察言观色，知道什么时候该主动，什么时候该示弱。</p>";
+      } else {
+        resultContent = "<h3>暗影猎人型</h3><p>你在感情中很有策略，懂得如何让对方更珍惜你。你的“心机”更多是一种高情商的表现。</p>";
+      }
+      resultText.innerHTML = resultContent;
+    }
+
+ function showResult() {
+  document.getElementById("quiz-page").classList.add("hidden");
+  document.getElementById("result-page").classList.remove("hidden");
+
+  var resultText = document.getElementById("result-text");
+  var resultImg = document.getElementById("result-img"); // 获取结果页的图片元素
+  var resultContent = "";
+
+  if (totalScore <= 10) {
+    resultContent = "<h3>单纯天使型</h3><p>你在恋爱中很真诚，但可能有点“缺乏手段”。</p>";
+    resultImg.src = "images/result-page-1.jpg"; // 设置不同的结果页图片
+  } else if (totalScore <= 25) {
+    resultContent = "<h3>高情商玩家型</h3><p>你在恋爱中懂得察言观色，知道如何掌控节奏。</p>";
+    resultImg.src = "images/result-page-2.jpg";
+  } else {
+    resultContent = "<h3>暗影猎人型</h3><p>你在感情中很有策略，懂得如何让对方更珍惜你。</p>";
+    resultImg.src = "images/result-page-3.jpg";
+  }
+  
+  resultText.innerHTML = resultContent;
+}
+    // 绑定开始测试按钮事件
+    document.getElementById("start-button").addEventListener("click", function() {
+      document.getElementById("start-page").classList.add("hidden");
+      document.getElementById("quiz-page").classList.remove("hidden");
+      showQuestion(currentQuestion);
+    });
+
+    // 绑定重新测试按钮事件
+    document.getElementById("restart-button").addEventListener("click", function() {
+      currentQuestion = 0;
+      totalScore = 0;
+      document.getElementById("result-page").classList.add("hidden");
+      document.getElementById("quiz-page").classList.remove("hidden");
+      showQuestion(currentQuestion);
+    });
+  </script>
+</body>
+</html>
